@@ -22,7 +22,7 @@ class Window:
     :return: None
     """
 
-    def __init__(self, title, width=1000, height=700, fps=30):
+    def __init__(self, title, width=1000, height=650, fps=30):
         # text that appears in the title bar
         self.__title = title
         # width of the window frame
