@@ -10,7 +10,7 @@ class Color:
     GREY = (50, 50, 50)
     RED = (255, 0, 0)
     GREEN = (0, 255, 0)
-    BLUE = (0, 0, 255)
+    BLUE = (55, 118, 171)
     ORANGE = (255, 145, 0)
     PURPLE = (175, 25, 255)
     YELLOW = (225, 225, 30)
@@ -34,13 +34,15 @@ class Window:
         # frames per second
         self.__fps = fps
         # background color
-        self.__bg_color = Color.GREY
+        self.__bg_color = Color.BLUE
         # clock object that tracks time
         self.__clock = pygame.time.Clock()
         # base surface that all surfaces are overlaid on top
         self.__screen = pygame.display.set_mode(self.__dimension)
         # colors the screen surface
         self.__screen.fill(self.__bg_color)
+        # another layer of color for it to be able to vary between the levels
+        self._surface = pygame.Surface
         # sets the window caption with the title
         pygame.display.set_caption(self.__title)
 
@@ -62,6 +64,10 @@ class Window:
         """
         self.__screen.fill(self.__bg_color)
 
+    def setColor(self, color):
+        self._color = color
+        self.__screen.fill(self._color)
+
     # Accessor Methods
     def getScreen(self):
         return self.__screen
@@ -77,6 +83,7 @@ if __name__ == "__main__":
     pygame.init()
 
     WINDOW = Window("template")
+    WINDOW.setColor(Color.BLUE)
 
     while True:
         # pygame retrieves all inputs
