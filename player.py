@@ -47,8 +47,7 @@ if __name__ == "__main__":
     pygame.init()
     WINDOW = Window("image sprite")
     CHARACTER = Player(100, 100, 500, 500, 10, "media/ninja.png")
-    CHARACTER.setScale(0.5)
-    offset_y = 70
+    CHARACTER.setScale(1)
 
     while True:
         for event in pygame.event.get():
@@ -60,7 +59,7 @@ if __name__ == "__main__":
         # Processing
         CHARACTER.WASDMove(PRESSED_KEYS)
 
-        CHARACTER.stopAtEdge(WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight(), 0, offset_y)
+        CHARACTER.stopAtEdge(WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight(), 0)
 
         # Outputs
         WINDOW.clearScreen()
