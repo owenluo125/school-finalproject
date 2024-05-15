@@ -9,8 +9,8 @@ from my_sprite import MySprite
 
 
 class Player(MySprite):
-    def __init__(self, width, height, x, y, speed, file):
-        MySprite.__init__(self, width=0, height=0, x=0, y=0, speed=10, file="media/ninja.png")
+    def __init__(self, width=200, height=200, x=500, y=500, speed=10, file="media/ninja.png"):
+        MySprite.__init__(self, width, height, x, y, speed, file)
         self.__file_location = file
         self._surface = pygame.Surface
         self._surface = pygame.image.load(self.__file_location).convert_alpha()
@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
     pygame.init()
     WINDOW = Window("image sprite")
-    CHARACTER = Player(100, 100, 500, 500, 10, "media/ninja.png")
+    CHARACTER = Player()
     CHARACTER.setScale(1)
 
     while True:
