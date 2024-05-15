@@ -41,8 +41,6 @@ class Window:
         self.__screen = pygame.display.set_mode(self.__dimension)
         # colors the screen surface
         self.__screen.fill(self.__bg_color)
-        # another layer of color for it to be able to vary between the levels
-        self._surface = pygame.Surface
         # sets the window caption with the title
         pygame.display.set_caption(self.__title)
 
@@ -63,6 +61,7 @@ class Window:
         :return:
         """
         self.__screen.fill(self.__bg_color)
+
 
     def setColor(self, color):
         self._color = color

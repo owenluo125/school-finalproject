@@ -12,7 +12,7 @@ class MySprite:
     Abstract sprite class to build other sprites
     """
 
-    def __init__(self, width=0, height=0, x=0, y=0, speed=10, file="ninja.png"):
+    def __init__(self, width=0, height=0, x=0, y=0, speed=10, file="media/goldensand.png"):
         self.__width = width
         self.__height = height
         self._dimensions = (self.__width, self.__height)
