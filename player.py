@@ -11,10 +11,11 @@ from my_sprite import MySprite
 class Player(MySprite):
     def __init__(self, width=200, height=200, x=500, y=500, speed=10, file="media/ninja.png"):
         MySprite.__init__(self, width, height, x, y, speed, file)
-        self.__file_location = file
-        self._surface = pygame.Surface
-        self._surface = pygame.image.load(self.__file_location).convert_alpha()
+        self.file_location = file
+        self.surface = pygame.Surface
+        self.surface = pygame.image.load(self.file_location).convert_alpha()
         self.__health = 0
+        self.takeDamageTime = 0
 
     def WASDMove(self, pressed_keys):
         if pressed_keys[pygame.K_d]:
@@ -39,6 +40,18 @@ class Player(MySprite):
 
     def updateSpeed(self, new_speed):
         self.speed = new_speed
+
+    def invulnerableFrames(self, tick):
+        # need variable that increases each main program loop (tick)
+        if tick < self.takeDamageTime + 100:
+            # if the tick is less than 100 frames after the initial hit
+            self.canTakeDamage = False
+            if tick - self.canTakeDamage % 25 == 0:
+                # if it is a multiple of 25 frames away from the initial hit, flash sprite
+                self.surface = pygame.image.load("media/nothing.png").convert_alpha()
+            else:
+                self.surface = pygame.Surface
+                self.surface = pygame.image.load(self.file_location).convert_alpha()
 
 
 if __name__ == "__main__":
