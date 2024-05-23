@@ -12,55 +12,74 @@ import pygame
 
 
 class ImageSprite(MySprite):
-
-    def __init__(self, image_file_location, x, y):
-        MySprite.__init__(self, x=x, y=y)
-        self.__x = x
-        self.__y = y
-        self.__position = (x, y)
-        self.__file_location = image_file_location
+    # 36 * 20
+    def __init__(self, width=200, height=200, file="media/goldensand.png"):
+        MySprite.__init__(self, width, height, file="media/goldensand.png")
+        self.__file_location = file
         self._surface = pygame.image.load(self.__file_location).convert_alpha()
         self.__image_dir_x = True
 
-    #modifier methods
-    def Path(self):
-        for i in range(500):
+        self.tiles = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
+
+    def createTiles(self):
+        # creates the tiles
+        for x in range(0, 32):
+            for y in range(0, 20):
+                self.tiles[x].append(ImageSprite())
+
+    def placeTiles(self):
+        # places the tiles
+        for x in range(len(self.tiles)):
+            for y in range(len(self.tiles[x])):
+                self.tiles[x][y].setX((32 * x))
+                self.tiles[x][y].setY((32 * y))
+
+    def scaleTiles(self):
+        # scales the tiles up
+        for x in range(len(self.tiles)):
+            for tile in self.tiles[x]:
+                tile.setScale(1)
+
+    def updateTiles(self):
+        for x in range(len(self.tiles)):
+            for y in range(len(self.tiles[x])):
+                WINDOW.getScreen().blit(self.tiles[x][y].getSurface(), self.tiles[x][y].getPosition())
 
 
+    def setX(self, x):
+        self.x = x
+        self.updatePosition()
 
-    def setScale(self, scale_x, scale_y=None):
-        """
-        changes the scale of the image, making it bigger or smaller
-        :param scale_x: float
-        :param scale_y: float
-        :return: None
-        """
-        if scale_y is None:
-            scale_y = scale_x
-        self._surface = pygame.transform.scale(self._surface, (self.getWidth()*scale_x, self.getHeight()*scale_y))
+    def setY(self, y):
+        self.y = y
+        self.updatePosition()
 
-    def setPosition(self):
-        return self.position
+    def setPosition(self, x, y):
+        self.x = x
+        self.y = y
+        # self.position = (self.x, self.y)
+        self.updatePosition()
+
+
+    def updatePosition(self):
+        self.position = (self.x, self.y)
 
 
 if __name__ == "__main__":
     WINDOW = Window("First Layer")
-    WINDOW.setColor(Color.BLUE)
-    SAND_PATHWAY = []
-    for i in range(600):
-        SANDLAYER = ImageSprite("Media/goldensand.png", randint(0, 1000), randint(0, 600))
-        SANDLAYER.setScale(1.4)
-        SANDLAYER.setPosition()
-        SAND_PATHWAY.append(SANDLAYER)
+    SANDLAYER = ImageSprite()
+    SANDLAYER.createTiles()
+    SANDLAYER.placeTiles()
+    SANDLAYER.scaleTiles()
 
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                exit()
 
         WINDOW.clearScreen()
-        for SANDS in SAND_PATHWAY:
-            WINDOW.getScreen().blit(SANDS.getSurface(), SANDS.getPosition())
+        SANDLAYER.updateTiles()
         WINDOW.updateFrame()
 
