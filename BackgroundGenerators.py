@@ -3,6 +3,7 @@ Title: Background Generator
 Author: Radin and Owen
 Date-Created: 5/14/2024
 """
+import random
 
 from Window import Color
 from Window import Window
@@ -14,7 +15,7 @@ import pygame
 class ImageSprite(MySprite):
     # 36 * 20
     def __init__(self, width=200, height=200, file="media/goldensand.png"):
-        MySprite.__init__(self, width, height, file="media/goldensand.png")
+        MySprite.__init__(self, width, height, file=file)
         self.__file_location = file
         self._surface = pygame.image.load(self.__file_location).convert_alpha()
         self.__image_dir_x = True
@@ -26,6 +27,7 @@ class ImageSprite(MySprite):
         for x in range(0, 32):
             for y in range(0, 20):
                 self.tiles[x].append(ImageSprite())
+                print(self.tiles)
 
     def placeTiles(self):
         # places the tiles
@@ -64,6 +66,35 @@ class ImageSprite(MySprite):
     def updatePosition(self):
         self.position = (self.x, self.y)
 
+class Terrain(ImageSprite):
+    global ImageSprite
+    def __init__(self, width=200, height=200, file="media/spike_1.png"):
+        ImageSprite.__init__(self, width, height)
+        self.__file_location = file
+        self._surface = pygame.image.load(self.__file_location).convert_alpha()
+
+    def terrainTiles(self, num_of_tiles_removed, num_of_tiles_spiked):
+        self.count = 0 #to ensure later that the while loop ends and not all blocks get taken out
+        while self.count < num_of_tiles_removed: ##removes tiles too to add a bit of challenge aside from spikes
+            # Chooses one of the many sand blocks in the list
+            x_index = random.randrange(len(self.tiles))
+            y_index = random.randrange(len(self.tiles[x_index]))
+
+            # Removes the sandblock
+            self.tiles[x_index].pop(y_index)
+            self.count += 1
+
+            if self.count == num_of_tiles_removed:
+                break
+
+        while self.count < num_of_tiles_spiked:
+            # Chooses one of the many sand blocks in the list
+            x_index = random.randrange(len(self.tiles))
+            y_index = random.randrange(len(self.tiles[x_index]))
+
+            # Adds a Spike
+
+
 
 if __name__ == "__main__":
     WINDOW = Window("First Layer")
@@ -71,6 +102,7 @@ if __name__ == "__main__":
     SANDLAYER.createTiles()
     SANDLAYER.placeTiles()
     SANDLAYER.scaleTiles()
+    SANDLAYER.terrainTiles(250)
 
 
     while True:
