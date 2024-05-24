@@ -138,6 +138,9 @@ class MySprite:
             scale_y = scale_x
         self.surface = pygame.transform.scale(self.surface, (self.getWidth()*scale_x, self.getHeight()*scale_y))
 
+    def setSprite(self, sprite_file):
+        self.surface = pygame.image.load(sprite_file).convert_alpha()
+
 
 
 if __name__ == "__main__":
