@@ -6,6 +6,7 @@ Date-created: 5/14/2024
 
 import pygame
 from my_sprite import MySprite
+from background import Background
 
 
 class Player(MySprite):
@@ -19,10 +20,12 @@ class Player(MySprite):
 
     def WASDMove(self, pressed_keys):
         if pressed_keys[pygame.K_d]:
-            self.x += self.speed
-            if not self.image_dir_x:
-                self.surface = pygame.transform.flip(self.surface, True, False)
-                self.image_dir_x = True
+            # todo
+            if Background.checkBorder(self, ):
+                self.x += self.speed
+                if not self.image_dir_x:
+                    self.surface = pygame.transform.flip(self.surface, True, False)
+                    self.image_dir_x = True
         if pressed_keys[pygame.K_a]:
             self.x -= self.speed
             if self.image_dir_x:

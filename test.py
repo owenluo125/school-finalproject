@@ -1,7 +1,7 @@
 # test file
 
 import pygame
-from spike_1 import spikeOne
+from background import Background
 from player import Player
 from Window import Window
 
@@ -9,10 +9,21 @@ if __name__ == "__main__":
     pygame.init()
     WINDOW = Window("test")
 
+
+    SANDLAYER = Background()
+
+    # background sand
+    SANDLAYER.createTiles(SANDLAYER.backgroundSand)
+    SANDLAYER.placeTiles(SANDLAYER.backgroundSand)
+    SANDLAYER.scaleTiles(SANDLAYER.backgroundSand)
+
+    SANDLAYER.createTiles(SANDLAYER.levelFourTiles)
+    SANDLAYER.placeTiles(SANDLAYER.levelFourTiles)
+    SANDLAYER.scaleTiles(SANDLAYER.levelFourTiles)
+
     player = Player()
 
-    spike_1 = spikeOne()
-    spike_1.setScale(2)
+
 
     while True:
         for event in pygame.event.get():
@@ -26,26 +37,11 @@ if __name__ == "__main__":
 
         player.stopAtEdge(WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight(), 0)
 
-        if spike_1.isCollision(player.getWidth(), player.getHeight(), player.getPosition()):
-            print("yes")
-
-
-        if PRESSED_KEYS[pygame.K_SPACE]:
-            oldX = player.x
-            oldY = player.y
-            player.setPosition(oldX, oldY)
-            player.surface = pygame.image.load("media/nothing.png").convert_alpha()
-
-        else:
-            oldX = player.x
-            oldY = player.y
-            player.surface = pygame.image.load(player.file_location).convert_alpha()
-            player.setPosition(oldX, oldY)
-
-
         # Outputs
         WINDOW.clearScreen()
-        WINDOW.getScreen().blit(spike_1.getSurface(), spike_1.getPosition())
+        SANDLAYER.updateTiles(SANDLAYER.backgroundSand, WINDOW)
+        SANDLAYER.updateTiles(SANDLAYER.levelFourTiles, WINDOW)
         WINDOW.getScreen().blit(player.getSurface(), player.getPosition())
+        SANDLAYER.getSprite()
         WINDOW.updateFrame()
 

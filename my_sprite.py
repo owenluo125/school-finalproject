@@ -22,9 +22,9 @@ class MySprite:
         self.speed = speed
         self.dir_X = 1
         self.dir_Y = 1
-        self.__file_location = file
+        self.file_location = file
         self.surface = pygame.Surface
-        self.surface = pygame.image.load(self.__file_location).convert_alpha()
+        self.surface = pygame.image.load(self.file_location).convert_alpha()
         self.image_dir_x = True
 
     # Modifier Methods (setter methods)
@@ -139,7 +139,13 @@ class MySprite:
         self.surface = pygame.transform.scale(self.surface, (self.getWidth()*scale_x, self.getHeight()*scale_y))
 
     def setSprite(self, sprite_file):
+        self.file_location = sprite_file
         self.surface = pygame.image.load(sprite_file).convert_alpha()
+
+    def getSprite(self):
+        return self.file_location
+
+
 
 
 
