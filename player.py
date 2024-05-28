@@ -7,9 +7,11 @@ Date-created: 5/14/2024
 import pygame
 from my_sprite import MySprite
 from background import Background
+from Window import Color
 
 
 class Player(MySprite):
+
     def __init__(self, width=200, height=200, x=500, y=500, speed=10, file="media/ninja.png"):
         MySprite.__init__(self, width, height, x, y, speed, file)
         self.file_location = file
@@ -17,6 +19,8 @@ class Player(MySprite):
         self.surface = pygame.image.load(self.file_location).convert_alpha()
         self.__health = 0
         self.takeDamageTime = 0
+
+
 
     def WASDMove(self, pressed_keys):
         if pressed_keys[pygame.K_d]:
@@ -55,6 +59,35 @@ class Player(MySprite):
                 self.surface = pygame.Surface
                 self.surface = pygame.image.load(self.file_location).convert_alpha()
 
+class healthBar:
+    global Player
+
+    def __init__(self, width=1, height=1, x=500, y=480, speed=10):
+        self.__width = width
+        self.__height = height
+        self.__dimensions = (self.__width, self.__height)
+        self.__x = x
+        self.__y = y
+        self.__updatePosition = (self.__x, self.__y)
+        self.__color = Color.RED
+        self.__surface = pygame.Surface(self.__dimensions, pygame.SRCALPHA, 32)
+        self.__surface.fill(self.__color)
+        self.__speed = speed
+
+    def getSurface(self):
+        return self.__surface
+
+    def setX(self, x):
+        self.__x = Player.X
+        return self.__updatePosition
+
+    def setY(self, y):
+        Player.Y - 20 = y
+        return self.__updatePosition
+
+    def getPosition(self):
+        return self.__updatePosition
+
 
 if __name__ == "__main__":
     from Window import Window
@@ -62,6 +95,7 @@ if __name__ == "__main__":
     pygame.init()
     WINDOW = Window("image sprite")
     CHARACTER = Player()
+    HEALTH = healthBar(50, 10)
     CHARACTER.setScale(1)
 
     while True:
@@ -73,10 +107,11 @@ if __name__ == "__main__":
 
         # Processing
         CHARACTER.WASDMove(PRESSED_KEYS)
-
         CHARACTER.stopAtEdge(WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight(), 0)
+        HEALTH.Update()
 
         # Outputs
         WINDOW.clearScreen()
         WINDOW.getScreen().blit(CHARACTER.getSurface(), CHARACTER.getPosition())
+        WINDOW.getScreen().blit(HEALTH.getSurface(), HEALTH.getPosition())
         WINDOW.updateFrame()
