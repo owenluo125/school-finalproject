@@ -47,6 +47,15 @@ class MySprite:
         self.y = y
         self.updatePosition()
 
+    def getX(self):
+        return self.x
+
+    def getY(self):
+        return self.y
+
+    def getSpeed(self):
+        return self.speed
+
     def setPosition(self, x, y):
         self.x = x
         self.y = y

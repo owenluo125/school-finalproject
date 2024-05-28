@@ -19,12 +19,16 @@ class Player(MySprite):
         self.takeDamageTime = 0
 
     def WASDMove(self, pressed_keys):
+        speed = self.speed
         if pressed_keys[pygame.K_d]:
-            # todo
-            self.x += self.speed
-            if not self.image_dir_x:
-                self.surface = pygame.transform.flip(self.surface, True, False)
-                self.image_dir_x = True
+            if Background.checkHorizontalBorder(self.getX(), self.getWidth(), self.getSpeed()):
+                print("yes")
+                self.x += self.speed
+                if not self.image_dir_x:
+                    self.surface = pygame.transform.flip(self.surface, True, False)
+                    self.image_dir_x = True
+            else:
+                print("no")
         if pressed_keys[pygame.K_a]:
             self.x -= self.speed
             if self.image_dir_x:

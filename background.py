@@ -92,41 +92,41 @@ class Background(MySprite):
                     ["1", "0", "0", "0", "0", "0", "0", "0", "0", "1"],
                     ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1"]]
 
-    def createTiles(self, map):
+    def createTiles(self):
         # creates the tiles
         for x in range(0, 16):
             for y in range(0, 10):
                 try:
-                    if str(map[x][y]) == "0":
-                        map[x][y] = Background()
-                    if str(map[x][y]) == "1":
-                        map[x][y] = Background()
-                        map[x][y].setSprite("media/water.png")
-                    elif str(map[x][y]) == "2":
-                        map[x][y] = Background()
-                        map[x][y].setSprite("media/spike.png")
+                    if str(self.currentMap[x][y]) == "0":
+                        self.currentMap[x][y] = Background()
+                    if str(self.currentMap[x][y]) == "1":
+                        self.currentMap[x][y] = Background()
+                        self.currentMap[x][y].setSprite("media/water.png")
+                    elif str(self.currentMap[x][y]) == "2":
+                        self.currentMap[x][y] = Background()
+                        self.currentMap[x][y].setSprite("media/spike.png")
                 except:
-                    map[x].append(Background())
-                    map[x][y].setSprite("media/goldensand.png")
+                    self.currentMap[x].append(Background())
+                    self.currentMap[x][y].setSprite("media/goldensand.png")
 
 
-    def placeTiles(self, map):
+    def placeTiles(self):
         # places the tiles
-        for x in range(len(map)):
-            for y in range(len(map[x])):
-                map[x][y].setX((64 * x))
-                map[x][y].setY((64 * y))
+        for x in range(len(self.currentMap)):
+            for y in range(len(self.currentMap[x])):
+                self.currentMap[x][y].setX((64 * x))
+                self.currentMap[x][y].setY((64 * y))
 
-    def scaleTiles(self, map):
+    def scaleTiles(self):
         # scales the tiles up
-        for x in range(len(map)):
-            for tile in map[x]:
+        for x in range(len(self.currentMap)):
+            for tile in self.currentMap[x]:
                 tile.setScale(2)
 
-    def updateTiles(self, map, window):
-        for x in range(len(map)):
-            for y in range(len(map[x])):
-                window.getScreen().blit(map[x][y].getSurface(), map[x][y].getPosition())
+    def updateTiles(self, window):
+        for x in range(len(self.currentMap)):
+            for y in range(len(self.currentMap[x])):
+                window.getScreen().blit(self.currentMap[x][y].getSurface(), self.currentMap[x][y].getPosition())
 
 
     def setX(self, x):
@@ -148,12 +148,25 @@ class Background(MySprite):
         self.position = (self.x, self.y)
 
     def setMap(self, map):
-        self.currentMap = self.map
+        self.currentMap = map
 
-    def checkBorderSide(self, player):
-        # checks if there is a collision between water and
-        # todo
-        pass
+    def checkHorizontalBorder(self, playerx, width, speed):
+        for x in range(0, 16):
+            for y in range(0, 10):
+                try:
+                    if self.currentMap[x][y].getSprite() == "media/water.png":
+                        if self.currentMap[x][y].getPosition()[0] >= playerx - width + speed and \
+                                self.currentMap[x][y].getPosition()[0] <= playerx + height - speed:
+                                return True
+                except:
+                    pass
+        # checks if there is a collision between water and the player on their side
+    def test(self):
+        if self.currentMap[x][y].getPosition()[1] >= player.getY() - player.getHeight() + speed \
+                and \
+                self.currentMap[x][y].getPosition()[1] <= player.getY() + player.getHeight() - \
+                speed:
+            pass
 
 
 if __name__ == "__main__":

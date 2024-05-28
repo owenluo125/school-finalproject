@@ -11,19 +11,21 @@ if __name__ == "__main__":
 
 
     SANDLAYER = Background()
+    TOPLAYER = Background()
+    SANDLAYER.setMap(SANDLAYER.backgroundSand)
+    TOPLAYER.setMap(TOPLAYER.levelThreeTiles)
 
     # background sand
-    SANDLAYER.createTiles(SANDLAYER.backgroundSand)
-    SANDLAYER.placeTiles(SANDLAYER.backgroundSand)
-    SANDLAYER.scaleTiles(SANDLAYER.backgroundSand)
+    SANDLAYER.createTiles()
+    SANDLAYER.placeTiles()
+    SANDLAYER.scaleTiles()
 
-    SANDLAYER.createTiles(SANDLAYER.levelFourTiles)
-    SANDLAYER.placeTiles(SANDLAYER.levelFourTiles)
-    SANDLAYER.scaleTiles(SANDLAYER.levelFourTiles)
+    TOPLAYER.createTiles()
+    TOPLAYER.placeTiles()
+    TOPLAYER.scaleTiles()
+
 
     player = Player()
-
-
 
     while True:
         for event in pygame.event.get():
@@ -39,9 +41,9 @@ if __name__ == "__main__":
 
         # Outputs
         WINDOW.clearScreen()
-        SANDLAYER.updateTiles(SANDLAYER.backgroundSand, WINDOW)
-        SANDLAYER.updateTiles(SANDLAYER.levelFourTiles, WINDOW)
+
+        SANDLAYER.updateTiles(WINDOW)
+        TOPLAYER.updateTiles(WINDOW)
         WINDOW.getScreen().blit(player.getSurface(), player.getPosition())
-        SANDLAYER.getSprite()
         WINDOW.updateFrame()
 
