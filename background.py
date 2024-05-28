@@ -20,7 +20,7 @@ class Background(MySprite):
         self.__image_dir_x = True
 
         # todo
-        self.currentMap
+        self.currentMap = []
 
         self.backgroundSand = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
 
@@ -150,8 +150,10 @@ class Background(MySprite):
     def setMap(self, map):
         self.currentMap = self.map
 
-    def checkBorder(self, player):
+    def checkBorderSide(self, player):
+        # checks if there is a collision between water and
         # todo
+        pass
 
 
 if __name__ == "__main__":
