@@ -19,8 +19,8 @@ class Player(MySprite):
         self.surface = pygame.image.load(self.file_location).convert_alpha()
         self.__health = 0
         self.takeDamageTime = 0
-
-
+        self.x = x
+        self.y = y
 
     def WASDMove(self, pressed_keys):
         speed = self.speed
@@ -42,8 +42,17 @@ class Player(MySprite):
             self.y -= self.speed
         if pressed_keys[pygame.K_s]:
             self.y += self.speed
-
         self.updatePosition()
+        return self.x, self.y
+        #self.updatePosition()
+
+    def X(self):
+        return self.x
+
+
+    def Y(self):
+        return self.y
+
 
     def updateHealth(self, new_health):
         self.__health = new_health
@@ -64,30 +73,28 @@ class Player(MySprite):
                 self.surface = pygame.image.load(self.file_location).convert_alpha()
 
 class healthBar:
-    global Player
+    global Player, X, Y
 
-    def __init__(self, width=1, height=1, x=500, y=480, speed=10):
+    def __init__(self, width=1, height=1, x=500, y=480):
         self.__width = width
         self.__height = height
         self.__dimensions = (self.__width, self.__height)
-        self.__x = x
-        self.__y = y
-        self.__updatePosition = (self.__x, self.__y)
+        self._x = x
+        self._y = y
+        self.__updatePosition = (self._x, self._y)
         self.__color = Color.RED
         self.__surface = pygame.Surface(self.__dimensions, pygame.SRCALPHA, 32)
         self.__surface.fill(self.__color)
-        self.__speed = speed
 
     def getSurface(self):
         return self.__surface
 
-    def setX(self, x):
-        self.__x = Player.X
-        return self.__updatePosition
+    def setX(self, player_x):
+        self._x = player_x
 
-    def setY(self, y):
-        Player.Y - 20 = y
-        return self.__updatePosition
+    def setY(self, player_y):
+        self._y = player_y
+
 
     def getPosition(self):
         return self.__updatePosition
@@ -110,9 +117,11 @@ if __name__ == "__main__":
         PRESSED_KEYS = pygame.key.get_pressed()
 
         # Processing
-        CHARACTER.WASDMove(PRESSED_KEYS)
+        X, Y = CHARACTER.WASDMove(PRESSED_KEYS)
+        print(X, Y)
         CHARACTER.stopAtEdge(WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight(), 0)
-        HEALTH.Update()
+        HEALTH.setX(X)
+        HEALTH.setY(Y)
 
         # Outputs
         WINDOW.clearScreen()
