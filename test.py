@@ -35,7 +35,7 @@ if __name__ == "__main__":
         PRESSED_KEYS = pygame.key.get_pressed()
 
         # Processing
-        player.WASDMove(PRESSED_KEYS)
+        player.WASDMove(TOPLAYER, PRESSED_KEYS)
 
         player.stopAtEdge(WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight(), 0)
 
