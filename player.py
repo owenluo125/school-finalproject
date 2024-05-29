@@ -22,17 +22,16 @@ class Player(MySprite):
         self.x = x
         self.y = y
 
-    def WASDMove(self, pressed_keys):
+    def WASDMove(self, top_layer, pressed_keys):
         speed = self.speed
         if pressed_keys[pygame.K_d]:
-            if Background.checkHorizontalBorder(self.getX(), self.getWidth(), self.getSpeed()):
-                print("yes")
+            if not top_layer.checkHorizontalBorder(self.getX(), self.getY(), self.getWidth(), self.speed):
                 self.x += self.speed
                 if not self.image_dir_x:
                     self.surface = pygame.transform.flip(self.surface, True, False)
                     self.image_dir_x = True
             else:
-                print("no")
+                pass
         if pressed_keys[pygame.K_a]:
             self.x -= self.speed
             if self.image_dir_x:
