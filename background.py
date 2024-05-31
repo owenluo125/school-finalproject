@@ -15,9 +15,9 @@ class Background(MySprite):
     # 18 * 10
     def __init__(self, width=200, height=200, file="media/goldensand.png"):
         MySprite.__init__(self, width, height, file="media/goldensand.png")
-        self.__file_location = file
-        self._surface = pygame.image.load(self.__file_location).convert_alpha()
-        self.__image_dir_x = True
+        self.file_location = file
+        self.surface = pygame.image.load(self.file_location).convert_alpha()
+        self.image_dir_x = True
 
         # todo
         self.currentMap = []
@@ -99,11 +99,17 @@ class Background(MySprite):
                 try:
                     if str(self.currentMap[x][y]) == "0":
                         self.currentMap[x][y] = Background()
+                        self.file_location = "media/goldensand.png"
+                        self.surface = pygame.image.load(self.file_location).convert_alpha()
                     if str(self.currentMap[x][y]) == "1":
                         self.currentMap[x][y] = Background()
+                        self.file_location = "media/water.png"
+                        self.surface = pygame.image.load(self.file_location).convert_alpha()
                         self.currentMap[x][y].setSprite("media/water.png")
                     elif str(self.currentMap[x][y]) == "2":
                         self.currentMap[x][y] = Background()
+                        self.file_location = "media/spike.png"
+                        self.surface = pygame.image.load(self.file_location).convert_alpha()
                         self.currentMap[x][y].setSprite("media/spike.png")
                 except:
                     self.currentMap[x].append(Background())
@@ -150,17 +156,21 @@ class Background(MySprite):
     def setMap(self, map):
         self.currentMap = map
 
-    def checkHorizontalBorder(self, playerx, width, speed=10):
+    def checkHorizontalBorder(self, playerx, playery, width, speed=3):
         for x in range(0, 16):
             for y in range(0, 10):
-                try:
-                    if self.currentMap[x][y].getSprite() == "media/water.png":
-                        if self.currentMap[x][y].getPosition()[0] >= playerx - width + speed and \
-                                self.currentMap[x][y].getPosition()[0] <= playerx + height - speed:
+                if self.currentMap[x][y].getSprite() == "media/water.png":
+                    if self.currentMap[x][y].getPosition()[0] <= playerx + width - speed and \
+                            self.currentMap[x][y].getPosition()[0] + self.currentMap[x][y].getWidth() >= playerx:
+                        # todo figure out how to apply this to every other border (left side too)
+                        print("TRUE")
+                        if playery <= self.currentMap[x][y].getPosition()[1] + self.currentMap[x][y].getWidth():
+                            if playery + width >= self.currentMap[x][y].getPosition()[1]:
                                 return True
-                except:
+                else:
                     pass
-        # checks if there is a collision between water and the player on their side
+
+    # checks if there is a collision between water and the player on their side
     def test(self):
         if self.currentMap[x][y].getPosition()[1] >= player.getY() - player.getHeight() + speed \
                 and \
