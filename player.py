@@ -72,7 +72,7 @@ class Player(MySprite):
                 self.surface = pygame.Surface
                 self.surface = pygame.image.load(self.file_location).convert_alpha()
 
-class healthBar:
+class healthBar():
     global Player, X, Y
 
     def __init__(self, width=1, height=1, x=500, y=480):
@@ -89,15 +89,11 @@ class healthBar:
     def getSurface(self):
         return self.__surface
 
-    def setX(self, player_x):
-        self._x = player_x
-
-    def setY(self, player_y):
-        self._y = player_y
-
-
-    def getPosition(self):
-        return self.__updatePosition
+    def getPosition(self, x, y):
+        self.x = x
+        self.y = y
+        self.position = (self.x, self.y)
+        return self.position
 
 
 if __name__ == "__main__":
@@ -120,11 +116,9 @@ if __name__ == "__main__":
         X, Y = CHARACTER.WASDMove(PRESSED_KEYS)
         print(X, Y)
         CHARACTER.stopAtEdge(WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight(), 0)
-        HEALTH.setX(X)
-        HEALTH.setY(Y)
 
         # Outputs
         WINDOW.clearScreen()
         WINDOW.getScreen().blit(CHARACTER.getSurface(), CHARACTER.getPosition())
-        WINDOW.getScreen().blit(HEALTH.getSurface(), HEALTH.getPosition())
+        WINDOW.getScreen().blit(HEALTH.getSurface(), HEALTH.getPosition(X, Y - 20))
         WINDOW.updateFrame()

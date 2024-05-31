@@ -150,7 +150,7 @@ class Background(MySprite):
     def setMap(self, map):
         self.currentMap = map
 
-    def checkHorizontalBorder(self, playerx, width, speed):
+    def checkHorizontalBorder(self, playerx, width, speed=10):
         for x in range(0, 16):
             for y in range(0, 10):
                 try:
