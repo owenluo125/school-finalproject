@@ -94,6 +94,29 @@ class healthBar():
         self.position = (self.x, self.y)
         return self.position
 
+    def setColor(self, color):
+        self.__color = color
+        self.__surface.fill(self.__color)
+
+    ### for scaling the black frame of a healthbar
+
+    def getWidth(self):
+        return self.__surface.get_width()
+
+    def getHeight(self):
+        return self.__surface.get_height()
+
+    def setScale(self, scale_x, scale_y=None):
+        """
+        changes the scale of the image, making it bigger or smaller
+        :param scale_x: float
+        :param scale_y: float
+        :return: None
+        """
+        if scale_y is None:
+            scale_y = scale_x
+        self._surface = pygame.transform.scale(self.__surface, (self.getWidth()*scale_x, self.getHeight()*scale_y))
+
 
 if __name__ == "__main__":
     from Window import Window
@@ -102,6 +125,7 @@ if __name__ == "__main__":
     WINDOW = Window("image sprite")
     CHARACTER = Player()
     HEALTH = healthBar(50, 10)
+    HEALTHFRAME = healthBar
     CHARACTER.setScale(1)
 
     while True:
