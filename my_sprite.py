@@ -13,9 +13,9 @@ class MySprite:
     """
 
     def __init__(self, width=0, height=0, x=0, y=0, speed=10, file="media/ninja.png"):
-        self.__width = width
-        self.__height = height
-        self._dimensions = (self.__width, self.__height)
+        self.width = width
+        self.height = height
+        self.dimensions = (self.width, self.height)
         self.x = x
         self.y = y
         self.position = (self.x, self.y)
@@ -121,17 +121,29 @@ class MySprite:
             self.dir_Y = 1
         self.position = (self.x, self.y)
 
-    def isCollision(self, width, height, position):
+    def isRightCollision(self, width, position, speed):
         """
         use the width, height and position of an external sprite to test if it is colliding with the given sprite
         :param width: int
+        :param position: tuple
+        :return: None
+        """
+        # left side
+        # position[0] <= self.x + self.getWidth()
+        if position[0] + width + speed >= self.x:
+            return True
+        else:
+            return False
+
+    def isYCollision(self, height, position):
+        """
+        use the width, height and position of an external sprite to test if it is colliding with the given sprite
         :param height: int
         :param position: tuple
         :return: None
         """
 
-        if position[0] >= self.x - width and position[0] <= self.x + self.getWidth() and \
-            position[1] >= self.y - height and position[1] <= self.y + self.getHeight():
+        if position[1] >= self.y - height and position[1] <= self.y + self.getHeight():
             return True
         else:
             return False

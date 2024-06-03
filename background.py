@@ -156,17 +156,55 @@ class Background(MySprite):
     def setMap(self, map):
         self.currentMap = map
 
-    def checkHorizontalBorder(self, playerx, playery, width, speed=3):
+    def checkTopBorder(self, height, position, speed):
         for x in range(0, 16):
             for y in range(0, 10):
                 if self.currentMap[x][y].getSprite() == "media/water.png":
-                    if self.currentMap[x][y].getPosition()[0] <= playerx + width - speed and \
-                            self.currentMap[x][y].getPosition()[0] + self.currentMap[x][y].getWidth() >= playerx:
-                        # todo figure out how to apply this to every other border (left side too)
-                        print("TRUE")
-                        if playery <= self.currentMap[x][y].getPosition()[1] + self.currentMap[x][y].getWidth():
-                            if playery + width >= self.currentMap[x][y].getPosition()[1]:
-                                return True
+                    if self.currentMap[x][y].getY() >= position[1]:
+                        if self.currentMap[x][y].getY() <= (position[1] + height):
+                            if position[0] + height >= self.currentMap[x][y].getX() - speed:
+                                if position[0] <= self.currentMap[x][y].getX() + self.currentMap[x][y].getWidth() + \
+                                        speed:
+                                    return True
+                else:
+                    pass
+
+    def checkBottomBorder(self, height, position, speed):
+        for x in range(0, 16):
+            for y in range(0, 10):
+                if self.currentMap[x][y].getSprite() == "media/water.png":
+                    if position[1] >= self.currentMap[x][y].getY():
+                        if position[1] - (self.currentMap[x][y].getY() + self.currentMap[x][y].getHeight())<= speed:
+                            if position[0] + height >= self.currentMap[x][y].getX() - speed:
+                                if position[0] <= self.currentMap[x][y].getX() + self.currentMap[x][y].getWidth() + \
+                                        speed:
+                                    return True
+                else:
+                    pass
+
+    def checkRightBorder(self, height, position, speed):
+        for x in range(0, 16):
+            for y in range(0, 10):
+                if self.currentMap[x][y].getSprite() == "media/water.png":
+                    if position[0] >= self.currentMap[x][y].getX() + self.currentMap[x][y].getWidth():
+                        if position[0] - (self.currentMap[x][y].getX() + self.currentMap[x][y].getWidth()) <= speed:
+                            if position[1] + height >= self.currentMap[x][y].getY() - speed:
+                                if position[1] <= self.currentMap[x][y].getY() + self.currentMap[x][y].getHeight() + \
+                                        speed:
+                                    return True
+                else:
+                    pass
+
+    def checkLeftBorder(self, height, position, speed):
+        for x in range(0, 16):
+            for y in range(0, 10):
+                if self.currentMap[x][y].getSprite() == "media/water.png":
+                    if self.currentMap[x][y].getX() >= position[0] + height:
+                        if self.currentMap[x][y].getX() - (position[0] + height) <= speed:
+                            if position[1] + height >= self.currentMap[x][y].getY() - speed:
+                                if position[1] <= self.currentMap[x][y].getY() + self.currentMap[x][y].getHeight() + \
+                                        speed:
+                                    return True
                 else:
                     pass
 
