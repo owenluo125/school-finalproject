@@ -16,6 +16,7 @@ class Spike(MySprite):
         self._surface = pygame.image.load(self.__file_location).convert_alpha()
 
 
+
 if __name__ == "__main__":
     from Window import Window
 

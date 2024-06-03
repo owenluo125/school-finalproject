@@ -9,7 +9,7 @@ from Window import Window
 from my_sprite import MySprite
 from random import randint
 import pygame
-
+#from player import healthBar
 
 class Background(MySprite):
     # 18 * 10
@@ -209,12 +209,18 @@ class Background(MySprite):
                     pass
 
     # checks if there is a collision between water and the player on their side
-    def test(self):
-        if self.currentMap[x][y].getPosition()[1] >= player.getY() - player.getHeight() + speed \
-                and \
-                self.currentMap[x][y].getPosition()[1] <= player.getY() + player.getHeight() - \
-                speed:
-            pass
+    def SpikeCollision(self, position, width, height):
+        for x in range(0, 16):
+            for y in range(0, 10):
+                if self.currentMap[x][y].getSprite() == "media/spike.png":
+                        if position[0] >= self.__x - width and position[0] <= self.__x + self.getWidth() and \
+                                position[1] >= self.__y - height and position[1] <= self.__y + self.getHeight():
+                            return True
+                        else:
+                            return False
+
+
+
 
 
 if __name__ == "__main__":
