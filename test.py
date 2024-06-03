@@ -28,6 +28,30 @@ class healthBar():
         self.position = (self.x, self.y)
         return self.position
 
+    def setColor(self, color):
+        self.__color = color
+        self.__surface.fill(self.__color)
+
+
+    def getWidth(self):
+        return self.__width
+
+    def getHeight(self):
+        return self.__height
+
+    def setScale(self, scale_x, scale_y):
+        """
+        changes the scale of the image, making it bigger or smaller
+        :param scale_x: float
+        :param scale_y: float
+        :return: None
+        """
+        if scale_y is None:
+            scale_y = scale_x
+        self.__surface = pygame.transform.scale(self.__surface, (self.getWidth()*scale_x, self.getHeight()*scale_y))
+
+
+
 if __name__ == "__main__":
     pygame.init()
     WINDOW = Window("test")
@@ -52,6 +76,12 @@ if __name__ == "__main__":
     player = Player()
     health = healthBar(50, 10)
 
+
+    healthFrame = healthBar(50, 10)
+    healthFrame.setScale(1.0, 1.0)
+    healthFrame.setColor(Color.GREY)
+
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -70,6 +100,7 @@ if __name__ == "__main__":
         SANDLAYER.updateTiles(WINDOW)
         TOPLAYER.updateTiles(WINDOW)
         WINDOW.getScreen().blit(player.getSurface(), player.getPosition())
+        WINDOW.getScreen().blit(healthFrame.getSurface(), healthFrame.getPosition(X, Y - 20))
         WINDOW.getScreen().blit(health.getSurface(), health.getPosition(X, Y - 20))
         WINDOW.updateFrame()
 
