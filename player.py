@@ -12,7 +12,7 @@ from Window import Color
 
 class Player(MySprite):
 
-    def __init__(self, width=200, height=200, x=500, y=500, speed=10, file="media/ninja.png"):
+    def __init__(self, width=200, height=200, x=500, y=500, speed=5, file="media/ninja.png"):
         MySprite.__init__(self, width, height, x, y, speed, file)
         self.file_location = file
         self.surface = pygame.Surface
@@ -25,7 +25,7 @@ class Player(MySprite):
     def WASDMove(self, top_layer, pressed_keys):
         speed = self.speed
         if pressed_keys[pygame.K_d]:
-            if not top_layer.checkHorizontalBorder(self.getX(), self.getY(), self.getWidth(), self.speed):
+            if not top_layer.checkLeftBorder(self.getWidth(), self.getPosition(), self.speed):
                 self.x += self.speed
                 if not self.image_dir_x:
                     self.surface = pygame.transform.flip(self.surface, True, False)
@@ -33,14 +33,17 @@ class Player(MySprite):
             else:
                 pass
         if pressed_keys[pygame.K_a]:
-            self.x -= self.speed
-            if self.image_dir_x:
-                self.surface = pygame.transform.flip(self.surface, True, False)
-                self.image_dir_x = False  # image is now looking left
+            if not top_layer.checkRightBorder(self.getWidth(), self.getPosition(), self.speed):
+                self.x -= self.speed
+                if self.image_dir_x:
+                    self.surface = pygame.transform.flip(self.surface, True, False)
+                    self.image_dir_x = False  # image is now looking left
         if pressed_keys[pygame.K_w]:
-            self.y -= self.speed
+            if not top_layer.checkBottomBorder(self.getWidth(), self.getPosition(), self.speed):
+                self.y -= self.speed
         if pressed_keys[pygame.K_s]:
-            self.y += self.speed
+            if not top_layer.checkTopBorder(self.getWidth(), self.getPosition(), self.speed):
+                self.y += self.speed
         self.updatePosition()
         return self.x, self.y
         #self.updatePosition()
