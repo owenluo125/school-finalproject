@@ -53,6 +53,8 @@ if __name__ == "__main__":
 
         SANDLAYER.updateTiles(WINDOW)
         TOPLAYER.updateTiles(WINDOW)
+        # for radin
+        TOPLAYER.checkSpikeCollision(player.getPosition(), player.getWidth(), player.getHeight())
         WINDOW.getScreen().blit(player.getSurface(), player.getPosition())
         WINDOW.getScreen().blit(healthFrame.getSurface(), healthFrame.getPosition(X, Y - 20))
         WINDOW.getScreen().blit(health.getSurface(), health.getPosition(X, Y - 20))
