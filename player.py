@@ -88,8 +88,19 @@ class healthBar():
         self.__surface = pygame.Surface(self.__dimensions, pygame.SRCALPHA, 32)
         self.__surface.fill(self.__color)
 
+
+    def setNewWidth(self, new_width):
+        self.__width = new_width
+        self.__dimensions = (self.__width, self.__height)
+        #self.__surface = pygame.Surface(self.__dimensions, pygame.SRCALPHA, 32)
+        if self.__width == 0:
+            pass
+
     def getSurface(self):
         return self.__surface
+
+    def width(self):
+        return self.__width
 
     def getPosition(self, x, y):
         self.x = x
