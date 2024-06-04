@@ -19,7 +19,6 @@ class Background(MySprite):
         self.surface = pygame.image.load(self.file_location).convert_alpha()
         self.image_dir_x = True
 
-        # todo
         self.currentMap = []
 
         self.backgroundSand = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
@@ -35,7 +34,7 @@ class Background(MySprite):
                     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
                     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
                     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
-                    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+                    ["0", "0", "0", "0", "0", "9", "0", "0", "0", "0"],
                     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
                     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
                     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
@@ -56,13 +55,13 @@ class Background(MySprite):
                     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "1"],
                     ["0", "0", "0", "0", "0", "0", "0", "0", "0", "1"],
                     ["1", "1", "0", "0", "0", "0", "0", "1", "1", "1"],
-                    ["1", "1", "0", "0", "0", "0", "1", "1", "1", "1"]]
+                    ["1", "1", "0", "9", "0", "0", "1", "1", "1", "1"]]
 
         self.levelThreeTiles = [["1", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
                     ["1", "0", "0", "0", "0", "0", "0", "0", "0", "1"],
                     ["1", "0", "1", "1", "1", "1", "1", "1", "1", "1"],
                     ["1", "0", "1", "0", "0", "0", "0", "0", "0", "1"],
-                    ["1", "0", "1", "0", "0", "1", "0", "0", "0", "1"],
+                    ["1", "0", "1", "9", "0", "1", "0", "0", "0", "1"],
                     ["1", "0", "1", "1", "1", "1", "1", "1", "0", "1"],
                     ["1", "0", "1", "0", "0", "0", "0", "0", "0", "1"],
                     ["1", "0", "1", "0", "1", "1", "0", "0", "0", "1"],
@@ -79,7 +78,7 @@ class Background(MySprite):
                     ["1", "0", "0", "0", "0", "0", "0", "0", "0", "1"],
                     ["1", "0", "2", "2", "2", "2", "2", "2", "2", "1"],
                     ["1", "0", "2", "0", "0", "0", "0", "0", "0", "1"],
-                    ["1", "0", "2", "0", "0", "2", "0", "0", "0", "1"],
+                    ["1", "0", "2", "9", "0", "2", "0", "0", "0", "1"],
                     ["1", "0", "2", "2", "2", "2", "2", "2", "0", "1"],
                     ["1", "0", "2", "0", "0", "0", "0", "0", "0", "1"],
                     ["1", "0", "2", "0", "2", "2", "0", "0", "0", "1"],
@@ -91,6 +90,11 @@ class Background(MySprite):
                     ["1", "0", "2", "2", "2", "2", "2", "2", "0", "1"],
                     ["1", "0", "0", "0", "0", "0", "0", "0", "0", "1"],
                     ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1"]]
+
+        self.levelOnePosition = (50, 480)
+        self.levelTwoPosition = (150, 350)
+        self.levelThreePosition = (80, 520)
+        self.levelFourPosition = (80, 520)
 
     def createTiles(self):
         # creates the tiles
@@ -111,6 +115,11 @@ class Background(MySprite):
                         self.file_location = "media/spike.png"
                         self.surface = pygame.image.load(self.file_location).convert_alpha()
                         self.currentMap[x][y].setSprite("media/spike.png")
+                    elif str(self.currentMap[x][y]) == "9":
+                        self.currentMap[x][y] = Background()
+                        self.file_location = "media/finish.png"
+                        self.surface = pygame.image.load(self.file_location).convert_alpha()
+                        self.currentMap[x][y].setSprite("media/finish.png")
                 except:
                     self.currentMap[x].append(Background())
                     self.currentMap[x][y].setSprite("media/goldensand.png")
@@ -213,6 +222,18 @@ class Background(MySprite):
         for x in range(0, 16):
             for y in range(0, 10):
                 if self.currentMap[x][y].getSprite() == "media/spike.png":
+                    if position[0] >= self.currentMap[x][y].getX() - width \
+                            and position[0] <= self.currentMap[x][y].getX() + self.currentMap[x][y].getWidth()\
+                            and position[1] >= self.currentMap[x][y].getY() - height\
+                            and position[1] <= self.currentMap[x][y].getY() + self.currentMap[x][y].getHeight():
+                        return True
+                    else:
+                        pass
+
+    def checkFinish(self, position, width, height):
+        for x in range(0, 16):
+            for y in range(0, 10):
+                if self.currentMap[x][y].getSprite() == "media/finish.png":
                     if position[0] >= self.currentMap[x][y].getX() - width \
                             and position[0] <= self.currentMap[x][y].getX() + self.currentMap[x][y].getWidth()\
                             and position[1] >= self.currentMap[x][y].getY() - height\
