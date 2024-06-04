@@ -35,6 +35,7 @@ if __name__ == "__main__":
     healthFrame.setScale(1.0, 1.0)
     healthFrame.setColor(Color.GREY)
 
+    player.setPosition(TOPLAYER.levelFourPosition[0], TOPLAYER.levelFourPosition[1])
 
     while True:
         for event in pygame.event.get():
@@ -55,6 +56,7 @@ if __name__ == "__main__":
         TOPLAYER.updateTiles(WINDOW)
         # for radin
         TOPLAYER.checkSpikeCollision(player.getPosition(), player.getWidth(), player.getHeight())
+        TOPLAYER.checkFinish(player.getPosition(), player.getWidth(), player.getHeight())
         WINDOW.getScreen().blit(player.getSurface(), player.getPosition())
         WINDOW.getScreen().blit(healthFrame.getSurface(), healthFrame.getPosition(X, Y - 20))
         WINDOW.getScreen().blit(health.getSurface(), health.getPosition(X, Y - 20))
