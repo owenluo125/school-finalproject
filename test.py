@@ -65,6 +65,7 @@ if __name__ == "__main__":
         TOPLAYER.checkFinish(player.getPosition(), player.getWidth(), player.getHeight())
         WINDOW.getScreen().blit(player.getSurface(), player.getPosition())
         WINDOW.getScreen().blit(healthFrame.getSurface(), healthFrame.getPosition(X - 5, Y - 20))
-        WINDOW.getScreen().blit(health.getSurface(), health.getPosition(X - 5, Y - 20))
+        #WINDOW.getScreen().blit(health.getSurface(), health.getPosition(X - 5, Y - 20))
+        WINDOW.getScreen().blit(health.getSurface(), (0,0))
         WINDOW.updateFrame()
 
