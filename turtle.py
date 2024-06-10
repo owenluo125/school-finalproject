@@ -43,13 +43,11 @@ class Turtle(MySprite):
 
 
     def checkTurtleCollision(self, position, width, height):
-        for x in range(0, 16):
-            for y in range(0, 10):
-                if self.currentMap[x][y].getSprite() == "media/spike.png":
-                    if position[0] >= self.currentMap[x][y].getX() - width \
-                            and position[0] <= self.currentMap[x][y].getX() + self.currentMap[x][y].getWidth()\
-                            and position[1] >= self.currentMap[x][y].getY() - height\
-                            and position[1] <= self.currentMap[x][y].getY() + self.currentMap[x][y].getHeight():
-                        return True
-                    else:
-                        pass
+        for x in range(len(self.turtles)):
+            if position[0] >= self.turtles[x].getX() - width \
+                    and position[0] <= self.turtles[x].getX() + self.turtles[x].getWidth()\
+                    and position[1] >= self.turtles[x].getY() - height\
+                    and position[1] <= self.turtles[x].getY() + self.turtles[x].getHeight():
+                return True
+            else:
+                pass

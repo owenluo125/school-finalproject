@@ -18,7 +18,7 @@ if __name__ == "__main__":
     SANDLAYER = Background()
     TOPLAYER = Background()
     SANDLAYER.setMap(SANDLAYER.backgroundSand)
-    TOPLAYER.setMap(TOPLAYER.levelFiveTiles)
+    TOPLAYER.setMap(TOPLAYER.levelThreeTiles)
 
 
     # background sand
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     healthFrame.setScale(1.0, 1.0)
     healthFrame.setColor(Color.GREY)
 
-    player.setPosition(TOPLAYER.levelFivePosition[0], TOPLAYER.levelFivePosition[1])
+    player.setPosition(TOPLAYER.levelThreePosition[0], TOPLAYER.levelThreePosition[1])
 
     while True:
         for event in pygame.event.get():
@@ -65,6 +65,7 @@ if __name__ == "__main__":
         TOPLAYER.updateTiles(WINDOW)
         # for radin
         TOPLAYER.checkSpikeCollision(player.getPosition(), player.getWidth(), player.getHeight())
+        turtle.checkTurtleCollision(player.getPosition(), player.getWidth(), player.getHeight())
         TOPLAYER.checkFinish(player.getPosition(), player.getWidth(), player.getHeight())
         turtle.moveTurtles(WINDOW, WINDOW.getVirtualHeight())
         WINDOW.getScreen().blit(player.getSurface(), player.getPosition())
