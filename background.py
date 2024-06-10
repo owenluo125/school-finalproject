@@ -247,7 +247,7 @@ class Background(MySprite):
                         return True
                     else:
                         pass
-
+# TOPLAYER.checkSpikeCollision(player.getPosition(), player.getWidth(), player.getHeight()) == True:
     def checkFinish(self, position, width, height):
         for x in range(0, 16):
             for y in range(0, 10):

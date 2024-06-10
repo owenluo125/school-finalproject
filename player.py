@@ -94,7 +94,7 @@ class healthBar():
         if self.__width < 1:
             self.__width = 0
         #self.__dimensions = (self.__width, self.__height)
-        self.__dimensions = (50, 50)
+        self.__dimensions = (self.__width, self.__height)
         self.__surface = pygame.Surface(self.__dimensions, pygame.SRCALPHA, 32)
         self.__surface.fill(self.__color)
 

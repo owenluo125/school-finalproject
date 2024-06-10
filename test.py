@@ -18,7 +18,7 @@ if __name__ == "__main__":
     SANDLAYER = Background()
     TOPLAYER = Background()
     SANDLAYER.setMap(SANDLAYER.backgroundSand)
-    TOPLAYER.setMap(TOPLAYER.levelThreeTiles)
+    TOPLAYER.setMap(TOPLAYER.levelFiveTiles)
 
 
     # background sand
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     healthFrame.setScale(1.0, 1.0)
     healthFrame.setColor(Color.GREY)
 
-    player.setPosition(TOPLAYER.levelThreePosition[0], TOPLAYER.levelThreePosition[1])
+    player.setPosition(TOPLAYER.levelFivePosition[0], TOPLAYER.levelFivePosition[1])
 
     while True:
         for event in pygame.event.get():
@@ -52,10 +52,6 @@ if __name__ == "__main__":
         X, Y = player.WASDMove(TOPLAYER, PRESSED_KEYS)
         OriginalWidth = health.width()
 
-        if PRESSED_KEYS[pygame.K_r]:
-            health.setNewWidth(OriginalWidth - 5)
-
-
         player.stopAtEdge(WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight(), 0)
 
         # Outputs
@@ -64,13 +60,12 @@ if __name__ == "__main__":
         SANDLAYER.updateTiles(WINDOW)
         TOPLAYER.updateTiles(WINDOW)
         # for radin
-        TOPLAYER.checkSpikeCollision(player.getPosition(), player.getWidth(), player.getHeight())
-        turtle.checkTurtleCollision(player.getPosition(), player.getWidth(), player.getHeight())
+        if TOPLAYER.checkSpikeCollision(player.getPosition(), player.getWidth(), player.getHeight()):
+            health.setNewWidth(OriginalWidth - 1)
         TOPLAYER.checkFinish(player.getPosition(), player.getWidth(), player.getHeight())
         turtle.moveTurtles(WINDOW, WINDOW.getVirtualHeight())
         WINDOW.getScreen().blit(player.getSurface(), player.getPosition())
         WINDOW.getScreen().blit(healthFrame.getSurface(), healthFrame.getPosition(X - 5, Y - 20))
-        #WINDOW.getScreen().blit(health.getSurface(), health.getPosition(X - 5, Y - 20))
-        WINDOW.getScreen().blit(health.getSurface(), (0,0))
+        WINDOW.getScreen().blit(health.getSurface(), health.getPosition(X - 5, Y - 20))
         WINDOW.updateFrame()
 
