@@ -24,7 +24,7 @@ class MySprite:
         self.dir_Y = 1
         self.file_location = file
         self.surface = pygame.Surface
-        self.surface = pygame.image.load(self.file_location).convert_alpha()
+        self.__surface = pygame.image.load(self.file_location).convert_alpha()
         self.image_dir_x = True
 
     # Modifier Methods (setter methods)

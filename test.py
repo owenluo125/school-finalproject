@@ -11,8 +11,8 @@ if __name__ == "__main__":
     pygame.init()
     WINDOW = Window("test")
     while True:
-        # show start screen
-        pass
+        # show start screenssssss
+        break
 
     while True:
         SANDLAYER = Background()
