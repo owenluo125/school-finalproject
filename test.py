@@ -49,10 +49,6 @@ if __name__ == "__main__":
         OriginalWidth = health.width()
         print(OriginalWidth)
 
-        if PRESSED_KEYS[pygame.K_r]:
-            health.setNewWidth(OriginalWidth - 5)
-
-
         player.stopAtEdge(WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight(), 0)
 
         # Outputs
@@ -61,11 +57,11 @@ if __name__ == "__main__":
         SANDLAYER.updateTiles(WINDOW)
         TOPLAYER.updateTiles(WINDOW)
         # for radin
-        TOPLAYER.checkSpikeCollision(player.getPosition(), player.getWidth(), player.getHeight())
+        if TOPLAYER.checkSpikeCollision(player.getPosition(), player.getWidth(), player.getHeight()):
+            health.setNewWidth(OriginalWidth - 1)
         TOPLAYER.checkFinish(player.getPosition(), player.getWidth(), player.getHeight())
         WINDOW.getScreen().blit(player.getSurface(), player.getPosition())
         WINDOW.getScreen().blit(healthFrame.getSurface(), healthFrame.getPosition(X - 5, Y - 20))
-        #WINDOW.getScreen().blit(health.getSurface(), health.getPosition(X - 5, Y - 20))
-        WINDOW.getScreen().blit(health.getSurface(), (0,0))
+        WINDOW.getScreen().blit(health.getSurface(), health.getPosition(X - 5, Y - 20))
         WINDOW.updateFrame()
 
