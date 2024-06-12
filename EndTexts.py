@@ -2,14 +2,24 @@ from my_sprite import MySprite
 import pygame
 
 class ImageSprite(MySprite):
-
+    def __init__(self, width=200, height=200, x=500, y=500, speed=5, file="media/you-lose-text-with-neon.png"):
+        MySprite.__init__(self, width, height, x, y, speed, file)
+        self.file_location = file
+        self.surface = pygame.Surface
+        self.surface = pygame.image.load(self.file_location).convert_alpha()
+        self.__health = 0
+        self.takeDamageTime = 0
+        self.x = x
+        self.y = y
+    '''
     def __init__(self, image_file_location):
-        MySprite.__init__(self)
-        self.__file_location = image_file_location
-        self.__surface = pygame.image.load(self.__file_location).convert_alpha()
-        self.__image_dir_x = True
+        super().__init__()
+        self._file_location = image_file_location
+        self._surface = pygame.image.load(self._file_location).convert_alpha()
+        self._image_dir_x = True
 
-    # modifier methods
+    def getSurface(self):
+        return self._surface
 
     def setScale(self, scale_x, scale_y=None):
         """
@@ -21,7 +31,7 @@ class ImageSprite(MySprite):
         if scale_y is None:
             scale_y = scale_x
         self._surface = pygame.transform.scale(self.__surface, (self.getWidth()*scale_x, self.getHeight()*scale_y))
-
+    '''
 '''
 if __name__ == "__main__":
 

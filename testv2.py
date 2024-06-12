@@ -11,7 +11,7 @@ from EndTexts import ImageSprite
 if __name__ == "__main__":
     pygame.init()
     WINDOW = Window("test")
-    LOSE = ImageSprite("media/you-lose-text-with-neon.png")
+    LOSE = ImageSprite()
     turtle = Turtle()
     turtle.createTurtles()
     turtle.placeTurtles()
@@ -43,39 +43,48 @@ if __name__ == "__main__":
 
     player.setPosition(TOPLAYER.levelFivePosition[0], TOPLAYER.levelFivePosition[1])
 
+    game_over = False
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-        PRESSED_KEYS = pygame.key.get_pressed()
 
-        # Processing
-        X, Y = player.WASDMove(TOPLAYER, PRESSED_KEYS)
-        OriginalWidth = health.width()
+        if not game_over:
+            PRESSED_KEYS = pygame.key.get_pressed()
 
-        player.stopAtEdge(WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight(), 0)
+            # Processing
+            X, Y = player.WASDMove(TOPLAYER, PRESSED_KEYS)
+            OriginalWidth = health.width()
 
-        # Outputs
-        WINDOW.clearScreen()
+            player.stopAtEdge(WINDOW.getVirtualWidth(), WINDOW.getVirtualHeight(), 0)
 
-        SANDLAYER.updateTiles(WINDOW)
-        TOPLAYER.updateTiles(WINDOW)
-        # for radin
-        if TOPLAYER.checkSpikeCollision(player.getPosition(), player.getWidth(), player.getHeight()):
-            health.setNewWidth(OriginalWidth - 1)
-        if turtle.checkTurtleCollision(player.getPosition(), player.getWidth(), player.getHeight()):
-            health.setNewWidth(OriginalWidth - 1)
-        TOPLAYER.checkFinish(player.getPosition(), player.getWidth(), player.getHeight())
-        turtle.moveTurtles(WINDOW, WINDOW.getVirtualHeight())
-        WINDOW.getScreen().blit(player.getSurface(), player.getPosition())
-        WINDOW.getScreen().blit(healthFrame.getSurface(), healthFrame.getPosition(X - 5, Y - 20))
-        WINDOW.getScreen().blit(health.getSurface(), health.getPosition(X - 5, Y - 20))
-        WINDOW.updateFrame()
-        if health.getWidth() == 0:
+            # Outputs
             WINDOW.clearScreen()
+
+            SANDLAYER.updateTiles(WINDOW)
+            TOPLAYER.updateTiles(WINDOW)
+
+            if TOPLAYER.checkSpikeCollision(player.getPosition(), player.getWidth(), player.getHeight()):
+                health.setNewWidth(OriginalWidth - 1)
+            if turtle.checkTurtleCollision(player.getPosition(), player.getWidth(), player.getHeight()):
+                health.setNewWidth(OriginalWidth - 1)
+
+            if health.getWidth() <= 0:
+                game_over = True
+
+            TOPLAYER.checkFinish(player.getPosition(), player.getWidth(), player.getHeight())
+            turtle.moveTurtles(WINDOW, WINDOW.getVirtualHeight())
+            WINDOW.getScreen().blit(player.getSurface(), player.getPosition())
+            WINDOW.getScreen().blit(healthFrame.getSurface(), healthFrame.getPosition(X - 5, Y - 20))
+            WINDOW.getScreen().blit(health.getSurface(), health.getPosition(X - 5, Y - 20))
+        else:
+            # Render the "You Lose" image
             WINDOW.getScreen().blit(LOSE.getSurface(), LOSE.getPosition())
-            WINDOW.updateFrame()
+            print(type(LOSE.getSurface()))  # Should output: <class 'pygame.Surface'>
+
+        WINDOW.updateFrame()
 
 
 
