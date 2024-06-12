@@ -12,7 +12,7 @@ class MySprite:
     Abstract sprite class to build other sprites
     """
 
-    def __init__(self, width=0, height=0, x=0, y=0, speed=10, file="media/ninja.png"):
+    def __init__(self, width=0, height=0, x=0, y=0, speed=10, file="media/fish.png"):
         self.width = width
         self.height = height
         self.dimensions = (self.width, self.height)
@@ -24,7 +24,7 @@ class MySprite:
         self.dir_Y = 1
         self.file_location = file
         self.surface = pygame.Surface
-        self.__surface = pygame.image.load(self.file_location).convert_alpha()
+        self.surface = pygame.image.load(self.file_location).convert_alpha()
         self.image_dir_x = True
 
     # Modifier Methods (setter methods)

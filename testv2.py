@@ -81,8 +81,8 @@ if __name__ == "__main__":
             WINDOW.getScreen().blit(health.getSurface(), health.getPosition(X - 5, Y - 20))
         else:
             # Render the "You Lose" image
+            WINDOW.clearScreen()
             WINDOW.getScreen().blit(LOSE.getSurface(), LOSE.getPosition())
-            print(type(LOSE.getSurface()))  # Should output: <class 'pygame.Surface'>
 
         WINDOW.updateFrame()
 
